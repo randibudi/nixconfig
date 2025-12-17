@@ -16,13 +16,13 @@
     };
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    textfox = {
+      url = "github:adriankarlen/textfox";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ {
-    flake-parts,
-    self,
-    ...
-  }: let
+  outputs = inputs @ {flake-parts, ...}: let
     stateVersion = "25.11";
   in
     flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
@@ -42,9 +42,7 @@
           inherit system;
           config.allowUnfree = true;
         };
-
         formatter = pkgs.alejandra;
-
         pre-commit = {
           settings.hooks.alejandra.enable = true;
           settings.excludes = ["flake.lock"];
@@ -67,7 +65,6 @@
               "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
             ];
           };
-
           environment.systemPackages = [inputs.agenix.packages.${pkgs.system}.default];
           age.identityPaths = ["/home/randibudi/.ssh/id_ed25519"];
           system.stateVersion = stateVersion;
@@ -83,7 +80,7 @@
               inherit system;
               specialArgs = {inherit inputs pkgs;};
               modules = [
-                self.nixosModules.default
+                inputs.self.nixosModules.default
                 inputs.agenix.nixosModules.default
                 (inputs.import-tree ./hosts/denali)
               ];
@@ -96,8 +93,8 @@
               inherit pkgs;
               extraSpecialArgs = {inherit inputs;};
               modules = [
-                inputs.agenix.homeManagerModules.default
                 ./users/randibudi
+                inputs.agenix.homeManagerModules.default
                 {home.stateVersion = stateVersion;}
               ];
             });
