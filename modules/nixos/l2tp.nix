@@ -1,9 +1,7 @@
-{pkgs, config, ...}: {
+{pkgs, ...}: {
   networking.networkmanager = {
     enable = true;
-    plugins = with pkgs; [
-      networkmanager-l2tp
-    ];
+    plugins = [pkgs.networkmanager-l2tp];
   };
 
   services.strongswan.enable = true;
