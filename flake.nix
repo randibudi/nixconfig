@@ -67,7 +67,9 @@
               "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
             ];
           };
+
           environment.systemPackages = [inputs.agenix.packages.${pkgs.system}.default];
+          age.identityPaths = ["/home/randibudi/.ssh/id_ed25519"];
           system.stateVersion = stateVersion;
         };
 
