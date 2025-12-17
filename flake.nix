@@ -1,5 +1,10 @@
 {
   inputs = {
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
@@ -47,8 +52,7 @@
       };
 
       flake = {
-        nixosModules.default = {
-          system.stateVersion = stateVersion;
+        nixosModules.default = {pkgs, ...}: {
           nix.settings = {
             experimental-features = ["nix-command" "flakes"];
             warn-dirty = false;
@@ -63,6 +67,8 @@
               "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
             ];
           };
+          environment.systemPackages = [inputs.agenix.packages.${pkgs.system}.default];
+          system.stateVersion = stateVersion;
         };
 
         nixosConfigurations = {
@@ -76,6 +82,7 @@
               specialArgs = {inherit inputs pkgs;};
               modules = [
                 self.nixosModules.default
+                inputs.agenix.nixosModules.default
                 (inputs.import-tree ./hosts/denali)
               ];
             });
@@ -87,8 +94,9 @@
               inherit pkgs;
               extraSpecialArgs = {inherit inputs;};
               modules = [
-                {home.stateVersion = stateVersion;}
+                inputs.agenix.homeManagerModules.default
                 ./users/randibudi
+                {home.stateVersion = stateVersion;}
               ];
             });
         };
