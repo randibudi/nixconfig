@@ -82,7 +82,7 @@
               inherit pkgs;
               extraSpecialArgs = {inherit inputs;};
               modules = [
-                ./users/randibudi
+                ./users/randibudi.nix
                 inputs.agenix.homeManagerModules.default
                 {home.stateVersion = stateVersion;}
               ];

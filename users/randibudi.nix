@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  imports = [(inputs.import-tree ../../modules/home-manager)];
+  imports = [(inputs.import-tree ../modules/home-manager)];
 
   programs.home-manager.enable = true;
 
@@ -12,6 +12,7 @@
     homeDirectory = "/home/randibudi";
     packages = with pkgs; [
       antigravity-fhs
+      beeper
       google-chrome
       keepassxc
       nodejs_22
