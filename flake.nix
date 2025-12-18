@@ -6,10 +6,6 @@
       inputs.home-manager.follows = "home-manager";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    git-hooks-nix = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +24,6 @@
     flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
       imports = [
         inputs.home-manager.flakeModules.home-manager
-        inputs.git-hooks-nix.flakeModule
       ];
 
       systems = ["x86_64-linux"];
@@ -43,10 +38,6 @@
           config.allowUnfree = true;
         };
         formatter = pkgs.alejandra;
-        pre-commit = {
-          settings.hooks.alejandra.enable = true;
-          settings.excludes = ["flake.lock"];
-        };
       };
 
       flake = {
@@ -57,12 +48,10 @@
             extra-substituters = [
               "https://hercules-ci.cachix.org"
               "https://nix-community.cachix.org"
-              "https://pre-commit-hooks.cachix.org"
             ];
             extra-trusted-public-keys = [
               "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-              "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
             ];
           };
           environment.systemPackages = [inputs.agenix.packages.${pkgs.system}.default];
