@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   environment.systemPackages = [pkgs.wireguard-tools];
 
+  # VPN: WiseCon
   age.secrets.vpn-wireguard-wisecon = {
     file = ../../secrets/vpn-wireguard-wisecon.age;
     path = "/etc/NetworkManager/system-connections/Wisecon.nmconnection";
