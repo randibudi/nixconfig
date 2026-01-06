@@ -54,7 +54,7 @@
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             ];
           };
-          environment.systemPackages = [inputs.agenix.packages.${pkgs.system}.default];
+          environment.systemPackages = [inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default];
           age.identityPaths = ["/home/randibudi/.ssh/id_ed25519"];
           system.stateVersion = stateVersion;
         };

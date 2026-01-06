@@ -3,6 +3,6 @@
 
   textfox = {
     enable = true;
-    profile = "default";
+    profiles = ["default"];
   };
 }
