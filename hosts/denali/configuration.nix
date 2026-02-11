@@ -17,6 +17,7 @@
 
   # Set your time zone
   time.timeZone = "Asia/Jakarta";
+  environment.variables.TZ = "Asia/Jakarta";
 
   # Select internationalisation properties
   i18n.defaultLocale = "en_US.UTF-8";
