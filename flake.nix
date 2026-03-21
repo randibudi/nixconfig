@@ -16,6 +16,12 @@
       url = "github:adriankarlen/textfox";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    browseros = {
+      url = "github:Hill-Brandon-M/browseros-ai";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix.inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}: let

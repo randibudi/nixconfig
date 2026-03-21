@@ -13,9 +13,9 @@
     packages = with pkgs; [
       antigravity-fhs
       beeper
-      google-chrome
       keepassxc
       nodejs_22
+      vscode-fhs
     ];
   };
 }
